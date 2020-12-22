@@ -32,6 +32,16 @@ class MapGSICSV extends HTMLElement {
     console.log(fn);
     const data = CSV.toJSON(await CSV.fetch(fn));
 
+    const makeTable = (d) => {
+      const tbl = [];
+      tbl.push("<table>");
+      for (const name in d) {
+        tbl.push(`<tr><th>${name}</th><td>${d[name]}</td></tr>`);
+      }
+      tbl.push("</table>");
+      return tbl.join("");
+    };
+
     console.log(data);
     const lls = [];
     for (const d of data) {
@@ -45,7 +55,8 @@ class MapGSICSV extends HTMLElement {
       const url = d["schema:url"];
       const opt = { title };
       const marker = L.marker(ll, opt);
-      marker.bindPopup(`<a href=${url}>${title}</a>`);
+      const tbl = makeTable(d);
+      marker.bindPopup(`<a href=${url}>${title}</a>${tbl}`);
       iconlayer.addLayer(marker);
       lls.push(ll);
     }
