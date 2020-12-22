@@ -17,6 +17,8 @@ class MapGSICSV extends HTMLElement {
     this.appendChild(div);
     div.style.width = this.getAttribute("width") || "100%";
     div.style.height = this.getAttribute("height") || "60vh";
+    const icon = this.getAttribute("icon");
+    const iconsize = this.getAttribute("iconsize") || 30;
 
     const map = L.map(div);
     // set 国土地理院地図 https://maps.gsi.go.jp/development/ichiran.html
@@ -54,6 +56,15 @@ class MapGSICSV extends HTMLElement {
       const title = d["schema:name"];
       const url = d["schema:url"];
       const opt = { title };
+      if (icon) {
+        opt.icon = L.icon({
+          iconUrl: icon,
+          iconRetilaUrl: icon,
+          iconSize: [iconsize, iconsize],
+          iconAnchor: [iconsize / 2, iconsize / 2],
+          popupAnchor: [0, -iconsize],
+        });
+      }
       const marker = L.marker(ll, opt);
       const tbl = makeTable(d);
       marker.bindPopup(`<a href=${url}>${title}</a>${tbl}`);
