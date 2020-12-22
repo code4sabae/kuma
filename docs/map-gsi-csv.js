@@ -62,7 +62,7 @@ class MapGSICSV extends HTMLElement {
           iconRetilaUrl: icon,
           iconSize: [iconsize, iconsize],
           iconAnchor: [iconsize / 2, iconsize / 2],
-          popupAnchor: [0, -iconsize],
+          popupAnchor: [0, -iconsize / 2],
         });
       }
       const marker = L.marker(ll, opt);
